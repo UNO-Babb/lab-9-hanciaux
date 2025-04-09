@@ -97,29 +97,44 @@ def numberToBinary(num):
   """Takes a base10 number and converts to a binary string with 8 bits"""
   binary = ""
   #Convert from decimal to binary
+  value = 128
+  for i in range(8):
+    if num >= value:
+      binary = binary + "1"
+      num = num - value
+    else:
+      binary = binary + "0"
 
+    value = value // 2
 
   return binary
 
 def binaryToNumber(bin):
   """Takes a string binary value and converts it to a base10 integer."""
   decimal = 0
-
+  value = 128
+  for digit in bin:
+    if digit == "1":
+      decimal = decimal + value
+    value = value // 2
 
   return decimal
 
 def main():
   #Ask user if they want to encode/decode
-  myImg = Image.open('pki.png')
-  myMsg = "This is a secret message I will hide in an image."
-  encode(myImg, myMsg)
-  myImg.close()
-
-  """
-  yourImg = Image.open('secretImg.png')
-  msg = decode(yourImg)
-  print(msg)
-  """
+  task = input("Encode (E) or Decode (D)? ")
+  
+  if task == "E":
+    myImg = Image.open('pki.png')
+    myMsg = input("Enter a message: ")
+    encode(myImg, myMsg)
+    myImg.close()
+  
+  if task == "D":
+    yourImg = Image.open('secretImg.png')
+    msg = decode(yourImg)
+    print(msg)
+  
     
 if __name__ == '__main__':
   main()
